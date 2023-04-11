@@ -3,8 +3,8 @@
 namespace Minesweeper {
 
 	MineField::MineField(Difficulty difficulty, TextureManager& textureManager) :
-		m_Grid(Grid<GridObject>(difficulty.GridSize.X(), difficulty.GridSize.Y(), 32, Vector2::Zero(), [](int32_t x, int32_t y, Grid<GridObject>& g) { return GridObject(x, y, g); })),
-		m_GridRenderer(m_Grid, textureManager)
+		m_GridRenderer(m_Grid, textureManager),
+		m_Grid(Grid<GridObject>(difficulty.GridSize.X(), difficulty.GridSize.Y(), 32, Vector2::Zero(), [](int32_t x, int32_t y, Grid<GridObject>& g) { return GridObject(x, y, g); }))
 	{
 		for (auto& tile : m_Grid.GetGrid())
 		{
@@ -33,6 +33,8 @@ namespace Minesweeper {
 		// check if the left mouse button is pressed and the game has not yet started
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
+			while (sf::Mouse::isButtonPressed(sf::Mouse::Left));
+
 			GridObject* tile = GetTileAtPosition(window);
 
 			if (tile)
@@ -53,17 +55,18 @@ namespace Minesweeper {
 		// initialize random number generator
 		std::random_device dev;
 		std::mt19937 rng(dev());
-		std::uniform_int_distribution<std::mt19937::result_type> randomNumber(0, m_Grid.GetWidth() - 1);
+		std::uniform_int_distribution<std::mt19937::result_type> randomNumberX(0, m_Grid.GetWidth() - 1);
+		std::uniform_int_distribution<std::mt19937::result_type> randomNumberY(0, m_Grid.GetHeight() - 1);
 
 		std::vector<Vector2Int> takenPositions;
-		int32_t bombsPlaced = 0;
-		int32_t totalTiles = m_Grid.GetWidth() * m_Grid.GetHeight();
+		uint32_t bombsPlaced = 0;
+		uint32_t totalTiles = m_Grid.GetWidth() * m_Grid.GetHeight();
 
 		// keep placing bombs until the desired number is reached or there are no more available positions
 		while (bombsPlaced < difficulty.MinesAmount && takenPositions.size() < totalTiles)
 		{
 			// generate a random position on the game grid
-			Vector2Int position(randomNumber(rng), randomNumber(rng));
+			Vector2Int position(randomNumberX(rng), randomNumberY(rng));
 
 			// check if the position has already been taken or if it's the initial position
 			if (std::find(takenPositions.begin(), takenPositions.end(), position) != takenPositions.end() || position == initPosition)
@@ -77,6 +80,7 @@ namespace Minesweeper {
 			{
 				// set the tile as a bomb and update its texture
 				tile->SetTileType(TileType::Bomb);
+
 				bombsPlaced++;
 			}
 
@@ -91,9 +95,10 @@ namespace Minesweeper {
 		sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
 		Vector2 position(mousePosition.x, mousePosition.y);
 
-		// get the tile at the clicked position
 		int32_t x, y;
 		m_Grid.ConvertScreenToGrid(position, x, y);
+
+		// get the tile at the clicked position
 		return m_Grid.GetObject(x, y);
 	}
 

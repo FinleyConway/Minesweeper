@@ -97,7 +97,7 @@
     <Image Include="assets\Flag.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="assets\HoverTile.png">
+    <Image Include="assets\SafeTile.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\SelectedBomb.png">

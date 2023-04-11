@@ -116,7 +116,7 @@
     <Image Include="assets\8.png" />
     <Image Include="assets\Bomb.png" />
     <Image Include="assets\Flag.png" />
-    <Image Include="assets\HoverTile.png" />
+    <Image Include="assets\SafeTile.png" />
     <Image Include="assets\SelectedBomb.png" />
     <Image Include="assets\Tile.png" />
   </ItemGroup>

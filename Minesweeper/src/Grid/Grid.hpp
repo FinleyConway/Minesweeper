@@ -12,7 +12,7 @@ namespace Minesweeper {
     class Grid
     {
     public:
-        Grid(int32_t width, int32_t height, uint32_t cellSize, Vector2 originPosition, std::function<T(int, int, Grid<T>&)> gridObject)
+        Grid(int32_t width, int32_t height, uint32_t cellSize, Vector2 originPosition, std::function<T(int, int, Grid<T>&)> gridObject) 
         {
             m_Width = width;
             m_Height = height;
@@ -20,9 +20,9 @@ namespace Minesweeper {
             m_OriginPosition = originPosition;
             m_Grid.resize(width * height);
 
-            for (int32_t y = 0; y < height; y++)
+            for (int32_t x = 0; x < width; x++)
             {
-                for (int32_t x = 0; x < width; x++)
+                for (int32_t y = 0; y < height; y++)
                 {
                     m_Grid[x + y * width] = new T(gridObject(x, y, *this));
                 }
@@ -47,7 +47,7 @@ namespace Minesweeper {
         // set object from grid using x and y
         void SetObject(int32_t x, int32_t y, T& object)
         {
-            if (x >= 0 && y >= 0 && x < m_Width && y < m_Width)
+            if (x >= 0 && y >= 0 && x < m_Width && y < m_Height)
             {
                 m_Grid[x + y * m_Width] = object;
             }
@@ -56,7 +56,7 @@ namespace Minesweeper {
         // set object from grid using x and y
         void SetObject(Vector2Int position, T& object)
         {
-            if (position.X() >= 0 && position.Y() >= 0 && position.X() < m_Width && position.Y() < m_Width)
+            if (position.X() >= 0 && position.Y() >= 0 && position.X() < m_Width && position.Y() < m_Height)
             {
                 m_Grid[position.X() + position.Y() * m_Width] = object;
             }
@@ -73,9 +73,19 @@ namespace Minesweeper {
         // get object from grid using x and y
         T* GetObject(int32_t x, int32_t y)
         {
-            if (x >= 0 && y >= 0 && x < m_Width && y < m_Width)
+            if (x >= 0 && y >= 0 && x < m_Width && y < m_Height)
             {
                 return m_Grid[x + y * m_Width];
+            }
+            return nullptr;
+        }
+
+        // get object from grid using vector int position
+        T* GetObject(Vector2Int position)
+        {
+            if (position.X() >= 0 && position.Y() >= 0 && position.X() < m_Width && position.Y() < m_Height)
+            {
+                return m_Grid[position.X() + position.Y() * m_Width];
             }
             return nullptr;
         }

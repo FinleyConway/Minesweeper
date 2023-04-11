@@ -37,7 +37,7 @@ namespace Minesweeper {
         Grid<GridObject>& m_Grid;
 
         TileType m_TileType = TileType::Normal;
-        bool m_IsFlagged;
+        bool m_IsFlagged = false;
 
         static const Vector2Int s_AdjacentOffsets[8];
     };

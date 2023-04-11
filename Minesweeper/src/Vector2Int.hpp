@@ -27,7 +27,7 @@ namespace Minesweeper {
 		void X(int32_t x) { m_xPos = x; }
 		void Y(int32_t y) { m_yPos = y; }
 
-		int32_t Magnitude() const { return sqrt(m_xPos * m_xPos + m_yPos * m_xPos); }
+		float Magnitude() const { return sqrt(m_xPos * m_xPos + m_yPos * m_xPos); }
 
 		// methods
 		void Clamp(Vector2Int& min, Vector2Int& max)
