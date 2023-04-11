@@ -9,12 +9,6 @@
 
 namespace Minesweeper {
 
-	/*
-	* Easy = 8x8, 10 mines
-	* Medium = 16x16, 40 mines
-	* Hard = 30x16, 99 mines
-	*/
-
 	struct Difficulty
 	{
 	public:
@@ -29,9 +23,9 @@ namespace Minesweeper {
 	class MineField
 	{
 	public:
-		MineField(Difficulty difficulty, TextureManager& textureManager);
+		MineField(sf::RenderWindow& window, TextureManager& textureManager);
 
-		void PlayMinesweeper(Difficulty difficulty, sf::RenderWindow& window);
+		void PlayMinesweeper(sf::RenderWindow& window);
 
 		void DrawField(sf::RenderWindow& window);
 
@@ -42,9 +36,9 @@ namespace Minesweeper {
 		enum class GameState { Start, Playing, GameOver };
 		GameState m_GameState = GameState::Start;
 
-		void WaitForFirstAction(Difficulty difficulty, sf::RenderWindow& window);
+		void WaitForFirstAction(sf::RenderWindow& window);
 
-		void PlaceMines(Vector2Int initPosition, Difficulty difficulty);
+		void PlaceMines(Vector2Int initPosition);
 		void FloodPlain(GridObject& tile);
 		GridObject* GetTileAtPosition(sf::RenderWindow& window);
 

@@ -106,5 +106,8 @@
     <Image Include="assets\Tile.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="assets\Button.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

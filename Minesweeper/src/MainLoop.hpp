@@ -8,7 +8,7 @@ namespace Minesweeper {
 
 	inline void MainLoop()
 	{
-		SfmlHandler sfmlHandler("Minesweeper", 32 * 8, 32 * 8);
+		SfmlHandler sfmlHandler("Minesweeper",	30*32, 16*32);
 
 		TextureManager textureManager;
 		textureManager.LoadFromFile("1",			"assets/1.png");

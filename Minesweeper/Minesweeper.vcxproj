@@ -115,6 +115,7 @@
     <Image Include="assets\7.png" />
     <Image Include="assets\8.png" />
     <Image Include="assets\Bomb.png" />
+    <Image Include="assets\Button.png" />
     <Image Include="assets\Flag.png" />
     <Image Include="assets\SafeTile.png" />
     <Image Include="assets\SelectedBomb.png" />
