@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <format>
 #include <random>
 
@@ -69,15 +70,35 @@ namespace Minesweeper {
 			}
 		}
 
-		/**
-		 * Randomly shuffles all tiles in the grid.
-		 */
-		void Shuffle()
+		std::vector<std::pair<int32_t, int32_t>> GetSurrounding(int32_t x, int32_t y)
 		{
-			std::random_device rd;
-			std::mt19937 mt(rd());
+			static const std::array directions =
+			{
+				sf::Vector2i(+0, -1),
+				sf::Vector2i(+0, +1),
+				sf::Vector2i(-1, +0),
+				sf::Vector2i(+1, +0),
+				sf::Vector2i(-1, -1),
+				sf::Vector2i(+1, -1),
+				sf::Vector2i(-1, +1),
+				sf::Vector2i(+1, +1)
+			};
 
-			std::shuffle(std::begin(m_Tiles), std::end(m_Tiles), mt);
+			std::vector<std::pair<int32_t, int32_t>> tiles;
+			tiles.reserve(8); // reserve all possible tiles
+
+			for (const auto direction : directions)
+			{
+				const int32_t posX = direction.x + x;
+				const int32_t posY = direction.y + y;
+
+				if (IsWithin(posX, posY))
+				{
+					tiles.emplace_back(posX, posY);
+				}
+			}
+
+			return tiles;
 		}
 
 		/**
