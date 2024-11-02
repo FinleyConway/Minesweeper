@@ -8,8 +8,11 @@ FetchContent_Declare(sfml GIT_REPOSITORY https://github.com/SFML/SFML.git GIT_TA
 FetchContent_MakeAvailable(sfml)
 
 add_executable(Minesweeper
-    src/main.cpp
-        src/Grid.h
+        src/main.cpp
+        src/Minesweeper/Grid.h
+        src/Minesweeper/Tile.h
+        src/Minesweeper/Minesweeper.h
+        src/Minesweeper/Minesweeper.cpp
 )
 
 target_link_libraries(Minesweeper PRIVATE

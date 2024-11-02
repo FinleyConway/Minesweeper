@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SFML/System/Vector2.hpp>
+
 #include <iostream>
 #include <format>
 #include <random>
@@ -15,6 +17,7 @@ namespace Minesweeper {
 		uint32_t GetWidth() const { return m_SizeX; }
 		uint32_t GetHeight() const { return m_SizeY; }
 		uint16_t GetCellSize() const { return m_CellSize; }
+		const std::vector<TTile>& GetTiles() const { return m_Tiles; }
 
 		/**
 		 * Create grid with expected size.
@@ -70,7 +73,7 @@ namespace Minesweeper {
 			}
 		}
 
-		std::vector<std::pair<int32_t, int32_t>> GetSurrounding(int32_t x, int32_t y)
+		std::vector<std::pair<int32_t, int32_t>> GetSurrounding(int32_t x, int32_t y) const
 		{
 			static const std::array directions =
 			{
@@ -110,6 +113,17 @@ namespace Minesweeper {
 		bool IsWithin(int32_t x, int32_t y) const
 		{
 			return x >= 0 && x < m_SizeX && y >= 0 && y < m_SizeY;
+		}
+
+		/**
+		 * Reset grid to default.
+		 */
+		void Clear()
+		{
+			m_Tiles.clear();
+			m_SizeX = 0;
+			m_SizeY = 0;
+			m_CellSize = 0;
 		}
 
 		/**
