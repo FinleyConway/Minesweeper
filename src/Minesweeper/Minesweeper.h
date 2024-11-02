@@ -5,14 +5,14 @@
 
 namespace Minesweeper {
 
+	/**
+	 * Game state.
+	 */
+	enum class State { Invalid, Started, Playing, GameOver };
+
 	class Minesweeper
 	{
 	public:
-		/**
-		 * Game state.
-		 */
-		enum class State { Invalid, Started, Playing, GameOver };
-
 		/**
 		 * Create the game with given field dimensions.
 		 * @param sizeX The width of the field.
@@ -44,12 +44,6 @@ namespace Minesweeper {
 		 * @param mouseY The mouse position y.
 		 */
 		void SetFlag(float mouseX, float mouseY);
-
-		/**
-		 * Get the position of all the mines.
-		 * @return A list of grid positions.
-		 */
-		std::vector<std::pair<int32_t, int32_t>> GetAllMineLocations();
 
 		/**
 		 * An immutable reference to all the tiles in the field.

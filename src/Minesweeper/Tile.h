@@ -4,7 +4,7 @@
 
 namespace Minesweeper {
 
-	enum class TileType { Ground, Safe, Mine, Flag };
+	enum class TileType { Ground, Safe, Mine, SelectedMine, Flag };
 
 	struct Tile
 	{
