@@ -26,5 +26,3 @@ cmake -B build
 cmake --build build
 ````
 5. Open build/bin and run the executable.
-
-## License
