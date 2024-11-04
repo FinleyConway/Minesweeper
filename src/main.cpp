@@ -38,12 +38,10 @@ sf::Sprite GetTile(const sf::Texture& texture, Minesweeper::State gameState, con
 			sprite.setTextureRect({ spriteSize * 11, 0, spriteSize, spriteSize });
 			break;
 
-		case Minesweeper::TileType::Flag:
-			sprite.setTextureRect({ spriteSize * 9, 0, spriteSize, spriteSize });
-			break;
-
 		default: break;
 	}
+
+	if (tile.flagged && gameState != Minesweeper::State::GameOver) sprite.setTextureRect({ spriteSize * 9, 0, spriteSize, spriteSize });
 
 	return sprite;
 }
@@ -62,9 +60,8 @@ int main()
 	uint32_t numOfMines = 99;
 
 	Minesweeper::Minesweeper game;
-	auto gameState = Minesweeper::State::Started;
+	Minesweeper::State gameState = game.CreateField(sizeX, sizeY, cellSize);
 
-	game.CreateField(sizeX, sizeY, cellSize);
 	window.setSize({ sizeX * cellSize, sizeY * cellSize });
 
 	while (window.isOpen())
@@ -88,8 +85,7 @@ int main()
 			{
 				if (event.key.code == sf::Keyboard::R)
 				{
-					game.CreateField(sizeX, sizeY, cellSize);
-					gameState = Minesweeper::State::Started;
+					gameState = game.CreateField(sizeX, sizeY, cellSize);
 				}
 			}
 			else if (event.type == sf::Event::MouseButtonPressed)
@@ -108,7 +104,7 @@ int main()
 				}
 				else if (event.mouseButton.button == sf::Mouse::Right)
 				{
-					if (gameState != Minesweeper::State::GameOver)
+					if (gameState == Minesweeper::State::Playing)
 					{
 						game.SetFlag(mousePosition.x, mousePosition.y);
 					}

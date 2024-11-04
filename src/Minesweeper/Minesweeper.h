@@ -8,7 +8,7 @@ namespace Minesweeper {
 	/**
 	 * Game state.
 	 */
-	enum class State { Invalid, Started, Playing, GameOver };
+	enum class State { Started, Playing, GameOver };
 
 	class Minesweeper
 	{
@@ -19,7 +19,7 @@ namespace Minesweeper {
 		 * @param sizeY The height of the field.
 		 * @param cellSize The size of each tile.
 		 */
-		void CreateField(uint32_t sizeX, uint32_t sizeY, uint16_t cellSize);
+		State CreateField(uint32_t sizeX, uint32_t sizeY, uint16_t cellSize);
 
 		/**
 		 * The initial function to be called to start the game.

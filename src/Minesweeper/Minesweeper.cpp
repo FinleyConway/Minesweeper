@@ -2,22 +2,26 @@
 
 namespace Minesweeper {
 
-	void Minesweeper::CreateField(uint32_t sizeX, uint32_t sizeY, uint16_t cellSize)
+	State Minesweeper::CreateField(uint32_t sizeX, uint32_t sizeY, uint16_t cellSize)
 	{
 		// clear pre-existing field
 		m_Grid.Clear();
 
 		// create the field
 		m_Grid.Create(sizeX, sizeY, cellSize);
+
+		return State::Started;
 	}
 
 	State Minesweeper::SelectInitialTile(uint32_t numOfMines, float mouseX, float mouseY)
 	{
 		const auto [x, y] = m_Grid.ConvertScreenToGrid(mouseX, mouseY);
 
-		if (!m_Grid.IsWithin(x, y)) return State::Invalid;
+		if (!m_Grid.IsWithin(x, y)) return State::Started;
 
 		auto& tile = m_Grid.Get(x, y);
+
+		if (tile.flagged) return State::Started;
 
 		// place mines
 		PlaceMines(numOfMines, x, y);
@@ -32,9 +36,11 @@ namespace Minesweeper {
 	{
 		const auto [x, y] = m_Grid.ConvertScreenToGrid(mouseX, mouseY);
 
-		if (!m_Grid.IsWithin(x, y)) return State::Invalid;
+		if (!m_Grid.IsWithin(x, y)) return State::Playing;
 
 		auto& tile = m_Grid.Get(x, y);
+
+		if (tile.flagged) return State::Playing;
 
 		if (tile.type == TileType::Mine)
 		{
@@ -63,8 +69,10 @@ namespace Minesweeper {
 
 		auto& tile = m_Grid.Get(x, y);
 
-		if (tile.type == TileType::Flag) tile.type = TileType::Ground;
-		else if (tile.type == TileType::Ground) tile.type = TileType::Flag;
+		if (tile.type == TileType::Ground || tile.type == TileType::Mine)
+		{
+			tile.flagged = !tile.flagged;
+		}
 	}
 
 	const std::vector<Tile>& Minesweeper::GetTiles() const { return m_Grid.GetTiles(); }
@@ -128,6 +136,7 @@ namespace Minesweeper {
 
 		// mark tile as safe
 		tile.type = TileType::Safe;
+		tile.flagged = false;
 		tile.numberOfMines = SurroundingMineCount(tileX, tileY);
 
 		// stop flood if there is a surrounding mine
