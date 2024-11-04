@@ -52,12 +52,12 @@ int main()
 	auto view = sf::View({ 0, 0 }, sf::Vector2f(window.getSize()));
 
 	sf::Texture assets;
-	assets.loadFromFile("/home/finley/CLionProjects/Minesweeper/assets/Tiles.png");
+	assets.loadFromFile("assets/Tiles.png");
 
-	uint32_t sizeX = 30;
-	uint32_t sizeY = 16;
-	uint16_t cellSize = 32;
-	uint32_t numOfMines = 99;
+	constexpr uint32_t sizeX      = 30;
+	constexpr uint32_t sizeY      = 16;
+	constexpr uint16_t cellSize   = 32;
+	constexpr uint32_t numOfMines = 99;
 
 	Minesweeper::Minesweeper game;
 	Minesweeper::State gameState = game.CreateField(sizeX, sizeY, cellSize);

@@ -10,6 +10,9 @@ namespace Minesweeper {
 		// create the field
 		m_Grid.Create(sizeX, sizeY, cellSize);
 
+		m_CurrentTileCount = 0;
+		m_NonMineCount = 0;
+
 		return State::Started;
 	}
 
@@ -22,6 +25,8 @@ namespace Minesweeper {
 		auto& tile = m_Grid.Get(x, y);
 
 		if (tile.flagged) return State::Started;
+
+		m_NonMineCount = m_Grid.GetWidth() * m_Grid.GetHeight() - numOfMines;
 
 		// place mines
 		PlaceMines(numOfMines, x, y);
@@ -55,6 +60,12 @@ namespace Minesweeper {
 		{
 			tile.type = TileType::Safe;
 			tile.numberOfMines = numOfMines;
+			m_CurrentTileCount++; // keep track of successful tiles
+
+			if (m_CurrentTileCount >= m_NonMineCount)
+			{
+				return State::GameWon;
+			}
 		}
 		else FloodPlain(tile, x, y);
 
@@ -138,6 +149,8 @@ namespace Minesweeper {
 		tile.type = TileType::Safe;
 		tile.flagged = false;
 		tile.numberOfMines = SurroundingMineCount(tileX, tileY);
+
+		m_CurrentTileCount++; // keep track of successful tiles
 
 		// stop flood if there is a surrounding mine
 		if (tile.numberOfMines > 0) return;

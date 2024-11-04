@@ -8,7 +8,7 @@ namespace Minesweeper {
 	/**
 	 * Game state.
 	 */
-	enum class State { Started, Playing, GameOver };
+	enum class State { Started, Playing, GameOver, GameWon };
 
 	class Minesweeper
 	{
@@ -78,6 +78,8 @@ namespace Minesweeper {
 
 	private:
 		Grid<Tile> m_Grid;
+		uint32_t m_NonMineCount = 0;
+		uint32_t m_CurrentTileCount = 0;
 	};
 
 } // Minesweeper
